@@ -17,14 +17,15 @@ class News:
         """
         if "labelsColnames" not in news_dict:
             raise WrongFormat("news_dict doesn't contain 'labelsColnames' key")
-        labels = news_dict.pop("labelsColnames")
+        labels = news_dict["labelsColnames"]
         typed_labels = {col_name: object for col_name in labels}
         self.typed_columns = {
                               "id": str,
                               "publishedAt": str,
                               "text": str,
                               "source": str,
-                              "symbols": list
+                              "symbols": list,
+                              "labelsColnames": list
                               }
         self.dict = {}
         for colname, col_type in {**typed_labels, **self.typed_columns}.items():
@@ -35,9 +36,9 @@ class News:
             self.dict[colname] = val
 
         if news_dict:
-            redundant_colnames = list(self.dict.keys())
+            redundant_colnames = list(news_dict.keys())
             raise WrongFormat(f"Passed columns not listed in default News"
-                              f"columns and 'labels' field: {redundant_colnames}")
+                              f"columns and 'labelsColnames' field: {redundant_colnames}")
 
     @property
     def data(self) -> dict:
