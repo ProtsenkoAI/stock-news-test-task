@@ -2,6 +2,9 @@ from typing import Dict, Any
 
 from exceptions import WrongFormat
 
+news_basic_field_names = ["id", "publishedAt", "text", "source", "symbols", "labelsColnames"]
+news_field_names = news_basic_field_names
+
 
 class News:
     # pymongo scheme support is poor, so decided to design own schema class
