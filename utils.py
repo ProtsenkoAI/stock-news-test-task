@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List
 import json
 from bson import json_util
 
@@ -9,7 +9,7 @@ def get_connection_string() -> str:
     return connection_string
 
 
-def convert_non_serializable_to_bson(obj: dict):
+def convert_non_serializable_to_bson(obj: List):
     return [json.loads(json_util.dumps(news_obj)) for news_obj in obj]
 
 
