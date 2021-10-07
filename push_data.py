@@ -33,7 +33,7 @@ def push_data(data_pth: str):
 
 
 def add_labels_to_news_document(labeled: Dict[str, Any], collection):
-    """Math labeled data with collection's document, update document and push updated one to DB"""
+    """Match labeled data with collection's document, update document and push updated one to DB"""
     if "_id" not in labeled:
         raise WrongFormat("labeled doesn't have _id field, can't match with db")
 

@@ -29,6 +29,10 @@ python3 ./pull_data.py --symbols_file_pth ./data/stock_symbols.csv \
 --fields publishedAt text source --out_pth ./data/found_resources.json
 ```
 ### Run labeling
+For example, can convert sample {"_id": ..., "text": ..., "labelsColumns": []} to:
+
+{"_id": ..., "text": ..., "labelsColumns": ["target", "targetStd"], "target": 2.0, "targetStd": 0.03}
+
 Example:
 ```
 python3 ./automatic_data_labeling.py --inp_pth ./data/found_resources.json \
