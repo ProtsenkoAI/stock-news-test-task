@@ -28,6 +28,7 @@ def create_labeled_data(inp_pth: str, out_pth: str, labels_colnames2poss_values:
 
     with open(out_pth, "w") as f:
         json.dump(data, f)
+    print("Successfully saved labeled data")
 
 
 if __name__ == "__main__":

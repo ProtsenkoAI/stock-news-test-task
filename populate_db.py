@@ -15,9 +15,12 @@ from utils import get_connection_string
 def generate_and_push_samples(nb_generated_news: int = 10, max_nb_symbols: int = 3):
     """
     Creates nb_generated_news news objects using random or default fillings to fields and push them to db
-    :param nb_generated_news: number of samples to generate
+    :param nb_generated_news: positive number of samples to generate
     :param max_nb_symbols: maximum number of companies' symbols occurring in one news.
     """
+    if nb_generated_news <= 0:
+        raise ValueError(f"invalid nb_generated_news: {nb_generated_news}")
+
     client = MongoClient(get_connection_string())
     news_db: Database = client.news_db
     news_collection: Collection = news_db.get_collection("news")

@@ -43,10 +43,10 @@ def pull_news(stock_symbols_csv_path: str, fields: List[str], save_pth: str):
 
 
 def check_input(stock_symbols: List[str], fields: List[str]):
-    non_standard_fields = set(news_field_names).difference(fields)
+    non_standard_fields = set(fields).difference(news_field_names)
     if non_standard_fields:
-        warnings.warn(f"Found unusual fields in your query, that don't match standard data fields: "
-                      f"{non_standard_fields}. They will be queried, but it's not guaranteed that they'll be found")
+        warnings.warn((f"Found unusual fields in your query, that don't match standard data fields: "
+                      f"{non_standard_fields}. They will be queried, but it's not guaranteed that they'll be found"))
 
     if not stock_symbols:
         warnings.warn("Stock symbols is empty, it will result in empty result")
@@ -63,11 +63,13 @@ def write_data(all_news: List[dict], save_pth: str) -> bool:
                 json.dump(all_news, f)
             return True
         except FileNotFoundError:
-            print(f"Can't create file {save_pth}, probably parent directory doesn't exist."
-                  f"Save data to another path? (y/[n])")
+            print(f"Can't create file {save_pth}, probably parent directory doesn't exist.")
+            print("Save data to another path? (y/[n])")
             try_again = input() == "y"
             if not try_again:
                 return False
+            print("Enter save path (json file)")
+            save_pth = input()
 
 
 def _load_onerow_csv(pth: str) -> List:
@@ -84,9 +86,9 @@ if __name__ == "__main__":
                         help="Path to one-column, no-header .csv file with stock symbols to seek")
     parser.add_argument("--out_pth", default=constants.downloaded_data_pth,
                         help="path to json file where retrieved data will be stored")
-    parser.add_argument("--fields", default=",".join(news_field_names),
-                        nargs="+", help=f"List of fields to retrieve, delimited by ','. "
+    parser.add_argument("--fields", default=" ".join(news_field_names),
+                        nargs="+", help=f"List of fields to retrieve, delimited by ' '. "
                                         f"Possible values: {news_field_names}")
     args = parser.parse_args()
 
-    pull_news(args.symbols_file_pth, args.fields.split(","), args.out_pth)
+    pull_news(args.symbols_file_pth, args.fields, args.out_pth)

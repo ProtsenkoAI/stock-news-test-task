@@ -28,7 +28,7 @@ def push_data(data_pth: str):
             raise ValueError("Provided data without id column, can't identify object")
         add_labels_to_news_document(news_sample_data, news_collection)
 
-    print("Successfully wrote labeled data")
+    print("Successfully wrote labeled data to DB")
     client.close()
 
 
@@ -38,6 +38,8 @@ def add_labels_to_news_document(labeled: Dict[str, Any], collection):
         raise WrongFormat("labeled doesn't have _id field, can't match with db")
 
     db_data_state = collection.find_one({"_id": labeled["_id"]}, {"_id": 0})
+    if db_data_state is None:
+        raise ValueError(f"document with id {labeled['_id']} is not found. Maybe you populated DB after pulling")
     db_data_state.update(labeled)
     consistent_data = db_data_state
 

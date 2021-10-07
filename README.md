@@ -20,13 +20,13 @@ python3 ./files_setup.py
 ### Populate database with data
 Fills db with random-generated data for testing purposes. Example:
 ```
-python3 ./populate_db.py --cnt-news 8
+python3 ./populate_db.py --cnt_news 8
 ```
 ### Download data specifying stocks & data fields
 Example:
 ```
 python3 ./pull_data.py --symbols_file_pth ./data/stock_symbols.csv \
---fields publishedAt,text,source --out_pth ./data/found_resources.json
+--fields publishedAt text source --out_pth ./data/found_resources.json
 ```
 ### Run labeling
 Example:
